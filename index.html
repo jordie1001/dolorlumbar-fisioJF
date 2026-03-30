@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina Lumbar - JF Fisioteràpia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent: #00ff88; /* Verd gimnàs */
+            --text: #ffffff;
+            --gray: #888888;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header { text-align: center; margin-bottom: 20px; }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            padding: 25px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .ex-number {
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.05);
+            position: absolute;
+            top: 10px; left: 20px;
+            z-index: 0;
+        }
+
+        .content { position: relative; z-index: 1; }
+
+        h2 { font-size: 1.5rem; text-transform: uppercase; margin: 10px 0; letter-spacing: 1px; }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--accent);
+            color: black;
+            font-weight: bold;
+            border-radius: 50px;
+            margin-bottom: 15px;
+        }
+
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .controls { margin-top: 20px; }
+
+        .btn-counter {
+            background: none;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .btn-counter:active { background: var(--accent); color: black; }
+
+        .btn-next {
+            background: var(--accent);
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: 900;
+            border-radius: 10px;
+            width: 100%;
+            margin-top: 10px;
+            display: none;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>MOBILITAT</h1>
+        [span_1](start_span)<p style="color: var(--gray)">Cada matí: 10-15 reps[span_1](end_span)</p>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="card">
+        <div class="content">
+            <div id="exercise-ui">
+                <span class="badge" id="dosi-label">10-15 REPS</span>
+                <h2 id="ex-title">Cat/Camel</h2>
+                <p id="ex-desc" style="color: var(--gray); font-size: 0.9rem;">
+                    Millora la flexibilitat de tota la columna vertebral.
+                </p>
+                
+                <div class="video-container">
+                    <div style="padding-top: 25%; color: var(--gray);">[VÍDEO AQUÍ]</div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn-counter" onclick="addRep()">REPS: <span id="count">0</span> / 15</button>
+                    <button class="btn-next" id="nextBtn" onclick="nextExercise()">Següent Exercici →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const exercises = [
+            { title: "Cat/Camel", reps: 15, desc: "Mobilitat de columna en quadrupèdia." },
+            { title: "Dorsal quadrupèdia", reps: 15, desc: "Rotació i obertura de la zona dorsal." },
+            { title: "Dorsal foam roller", reps: 15, desc: "Extensiones sobre el rodet de bromera." }
+        ];
+
+        let currentIdx = 0;
+        let currentReps = 0;
+
+        function addRep() {
+            if (currentReps < exercises[currentIdx].reps) {
+                currentReps++;
+                document.getElementById('count').innerText = currentReps;
+                
+                if (currentReps === exercises[currentIdx].reps) {
+                    document.getElementById('nextBtn').style.display = 'block';
+                }
+            }
+        }
+
+        function nextExercise() {
+            currentIdx++;
+            if (currentIdx < exercises.length) {
+                currentReps = 0;
+                document.getElementById('count').innerText = "0";
+                document.getElementById('ex-title').innerText = exercises[currentIdx].title;
+                document.getElementById('ex-desc').innerText = exercises[currentIdx].desc;
+                document.getElementById('nextBtn').style.display = 'none';
+                updateProgress();
+            } else {
+                alert("Rutina completada! Bona feina.");
+            }
+        }
+
+        function updateProgress() {
+            const percent = (currentIdx / exercises.length) * 100;
+            document.getElementById('progressBar').style.width = percent + "%";
+        }
+    </script>
+</body>
+</html>
