@@ -3,191 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rutina Lumbar - JF Fisioteràpia</title>
+    <title>Rutina JF Fisioteràpia</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --accent: #00ff88; /* Verd gimnàs */
+            --bg: #0f0f0f;
+            --card: #1a1a1a;
+            --accent: #ccff00; /* Verd llima esportiu */
             --text: #ffffff;
-            --gray: #888888;
+            --muted: #888;
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg);
             color: var(--text);
             margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+        }
+
+        .category-pill {
+            background: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .progress-container {
+            height: 4px;
+            background: #333;
+            width: 100%;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        main {
+            flex: 1;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
         }
 
-        .header { text-align: center; margin-bottom: 20px; }
-        
-        .progress-container {
+        .exercise-card {
+            background: var(--card);
             width: 100%;
-            height: 8px;
-            background: #333;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: var(--accent);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .card {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 400px;
-            border-radius: 20px;
-            padding: 25px;
+            max-width: 450px;
+            border-radius: 30px;
+            padding: 30px;
             box-sizing: border-box;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #222;
         }
 
         .ex-number {
-            font-size: 5rem;
+            font-size: 8rem;
             font-weight: 900;
-            color: rgba(255,255,255,0.05);
+            color: rgba(204, 255, 0, 0.03);
             position: absolute;
-            top: 10px; left: 20px;
-            z-index: 0;
+            top: -20px;
+            right: 10px;
         }
 
-        .content { position: relative; z-index: 1; }
+        h2 { font-weight: 900; font-size: 1.8rem; margin: 10px 0; text-transform: uppercase; }
+        p.desc { color: var(--muted); margin-bottom: 20px; font-size: 0.9rem; line-height: 1.4; }
 
-        h2 { font-size: 1.5rem; text-transform: uppercase; margin: 10px 0; letter-spacing: 1px; }
-        
-        .badge {
-            display: inline-block;
-            padding: 5px 15px;
-            background: var(--accent);
-            color: black;
-            font-weight: bold;
-            border-radius: 50px;
-            margin-bottom: 15px;
-        }
-
-        .video-container {
+        .video-box {
             width: 100%;
-            aspect-ratio: 16/9;
+            border-radius: 20px;
             background: #000;
-            margin: 20px 0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .controls { margin-top: 20px; }
-
-        .btn-counter {
-            background: none;
-            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            text-decoration: none;
             color: var(--accent);
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 10px;
-            width: 100%;
-            cursor: pointer;
+            font-weight: 700;
+            padding: 40px 0;
+            text-align: center;
         }
 
-        .btn-counter:active { background: var(--accent); color: black; }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            background: #252525;
+            padding: 15px;
+            border-radius: 15px;
+        }
 
-        .btn-next {
+        .stat-item span { display: block; font-size: 0.6rem; color: var(--muted); text-transform: uppercase; }
+        .stat-item b { font-size: 1.1rem; color: var(--accent); }
+
+        .btn-main {
             background: var(--accent);
-            color: black;
+            color: #000;
             border: none;
-            padding: 15px 30px;
-            font-size: 1rem;
-            font-weight: 900;
-            border-radius: 10px;
             width: 100%;
-            margin-top: 10px;
-            display: none;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 900;
             text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .btn-main:active { transform: scale(0.98); }
+
+        .pain-warning {
+            font-size: 0.7rem;
+            color: #ff4444;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>MOBILITAT</h1>
-        [span_1](start_span)<p style="color: var(--gray)">Cada matí: 10-15 reps[span_1](end_span)</p>
-    </div>
-
-    <div class="progress-container">
+<header>
+    <div class="category-pill" id="cat-label">Mobilitat Matí</div>
+    <div class="progress-container" style="margin-top:15px">
         <div class="progress-bar" id="progressBar"></div>
     </div>
+</header>
 
-    <div class="card">
-        <div class="content">
-            <div id="exercise-ui">
-                <span class="badge" id="dosi-label">10-15 REPS</span>
-                <h2 id="ex-title">Cat/Camel</h2>
-                <p id="ex-desc" style="color: var(--gray); font-size: 0.9rem;">
-                    Millora la flexibilitat de tota la columna vertebral.
-                </p>
-                
-                <div class="video-container">
-                    <div style="padding-top: 25%; color: var(--gray);">[VÍDEO AQUÍ]</div>
-                </div>
+<main>
+    <div class="exercise-card">
+        <div class="ex-number" id="ex-num">01</div>
+        <h2 id="ex-title">Cat/Camel</h2>
+        <p class="desc" id="ex-desc">Mobilitat de columna cada dia al matí.</p>
 
-                <div class="controls">
-                    <button class="btn-counter" onclick="addRep()">REPS: <span id="count">0</span> / 15</button>
-                    <button class="btn-next" id="nextBtn" onclick="nextExercise()">Següent Exercici →</button>
-                </div>
+        <a href="#" id="ex-link" target="_blank" class="video-box">
+            ▶ VEURE VÍDEO EXERCICI
+        </a>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span>Objectiu</span>
+                <b id="ex-dosi">15 Reps</b>
+            </div>
+            <div class="stat-item">
+                <span>Completat</span>
+                <b id="ex-current">0</b>
             </div>
         </div>
+
+        <button class="btn-main" id="actionBtn" onclick="handleAction()">Comptar Repetició</button>
+        
+        <div class="pain-warning">
+            ⚠ TOLERÀNCIA AL DOLOR: MÀXIM 3/10
+        </div>
     </div>
+</main>
 
-    <script>
-        const exercises = [
-            { title: "Cat/Camel", reps: 15, desc: "Mobilitat de columna en quadrupèdia." },
-            { title: "Dorsal quadrupèdia", reps: 15, desc: "Rotació i obertura de la zona dorsal." },
-            { title: "Dorsal foam roller", reps: 15, desc: "Extensiones sobre el rodet de bromera." }
-        ];
+<script>
+    const routine = [
+        [span_3](start_span)// MOBILITAT[span_3](end_span)
+        { title: "Cat/Camel", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/1Yy0PFXDm23_z1i3e12ouSq/view", desc: "Mobilitat controlada de tota la columna." },
+        { title: "Dorsal quadrupèdia", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/1Y4XAoUatDpi9iY-IB25P3MH1YGD1nqt-/view", desc: "Rotació de la part superior de l'esquena." },
+        { title: "Dorsal foam roller", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/16RmoJ5EYa1RERpbujP3E0rDDP6wEazl-/view", desc: "Extensió dorsal amb l'ajuda del rodet." },
+        { title: "Rotació decúbit lateral", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/1oW-xTXMxlky94Ehv7FBk7C7914Ev_wLm/view", desc: "Obertura de pit i rotació de tronc al terra." },
+        { title: "Rotació decúbit supí", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/1LDfIA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", desc: "Deixant caure els genolls als costats." },
+        
+        [span_4](start_span)// FORÇA[span_4](end_span)
+        { title: "Hip thrust", dosi: 15, cat: "Força (3 dies/set)", video: "https://drive.google.com/file/d/1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7/view", desc: "Activació de gluti i control lumbar." },
+        { title: "Gluti mig planxa", dosi: 15, cat: "Força (3 dies/set)", video: "https://drive.google.com/file/d/1OilUaTYDzQGLhEtkAj5JLbPq6VSb2qU-/view", desc: "Estabilitat lateral de malucs." },
+        { title: "Squat a calaix", dosi: 15, cat: "Força (3 dies/set)", video: "https://drive.google.com/file/d/1kAyDJ6SFC_115916aaS6e3YcF8t7E8kT/view", desc: "Força de cames amb rang segur." },
+        
+        [span_5](start_span)// ESTIRAMENT[span_5](end_span)
+        [span_6](start_span){ title: "Estirament posterior", dosi: 1, cat: "Vespre", video: "https://drive.google.com/file/d/1LDfIA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", desc: "Cama a la paret. Gluti a terra i genolls estesos[span_6](end_span)." }
+    ];
 
-        let currentIdx = 0;
-        let currentReps = 0;
+    let currentIdx = 0;
+    let count = 0;
 
-        function addRep() {
-            if (currentReps < exercises[currentIdx].reps) {
-                currentReps++;
-                document.getElementById('count').innerText = currentReps;
-                
-                if (currentReps === exercises[currentIdx].reps) {
-                    document.getElementById('nextBtn').style.display = 'block';
-                }
-            }
+    function updateUI() {
+        const ex = routine[currentIdx];
+        document.getElementById('ex-num').innerText = (currentIdx + 1).toString().padStart(2, '0');
+        document.getElementById('ex-title').innerText = ex.title;
+        document.getElementById('ex-desc').innerText = ex.desc;
+        document.getElementById('cat-label').innerText = ex.cat;
+        document.getElementById('ex-link').href = ex.video;
+        document.getElementById('ex-dosi').innerText = ex.dosi + (ex.dosi > 1 ? " Reps" : " Minut");
+        document.getElementById('ex-current').innerText = count;
+        
+        // Progress bar
+        const progress = (currentIdx / routine.length) * 100;
+        document.getElementById('progressBar').style.width = progress + "%";
+
+        // Botó
+        const btn = document.getElementById('actionBtn');
+        if (count >= ex.dosi) {
+            btn.innerText = "Següent Exercici →";
+            btn.style.background = "#ffffff";
+        } else {
+            btn.innerText = ex.dosi > 1 ? "Comptar Repetició" : "Marcar com Fet";
+            btn.style.background = "var(--accent)";
         }
+    }
 
-        function nextExercise() {
-            currentIdx++;
-            if (currentIdx < exercises.length) {
-                currentReps = 0;
-                document.getElementById('count').innerText = "0";
-                document.getElementById('ex-title').innerText = exercises[currentIdx].title;
-                document.getElementById('ex-desc').innerText = exercises[currentIdx].desc;
-                document.getElementById('nextBtn').style.display = 'none';
-                updateProgress();
+    function handleAction() {
+        const ex = routine[currentIdx];
+        if (count < ex.dosi) {
+            count++;
+            if (window.navigator.vibrate) window.navigator.vibrate(50); // Vibració suau
+            updateUI();
+        } else {
+            if (currentIdx < routine.length - 1) {
+                currentIdx++;
+                count = 0;
+                updateUI();
             } else {
-                alert("Rutina completada! Bona feina.");
+                alert("🎉 Sessió completada! Cuida aquesta esquena.");
             }
         }
+    }
 
-        function updateProgress() {
-            const percent = (currentIdx / exercises.length) * 100;
-            document.getElementById('progressBar').style.width = percent + "%";
-        }
-    </script>
+    // Inicialitzar
+    updateUI();
+</script>
+
 </body>
 </html>
