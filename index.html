@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rutina JF Fisioteràpia</title>
+    <title>JF Fisioteràpia - Rutina Lumbar</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
-            --card: #161616;
-            --accent: #d4ff00; 
+            --bg: #050505;
+            --card: #111111;
+            --accent: linear-gradient(135deg, #d4ff00 0%, #88ff00 100%);
             --text: #ffffff;
-            --muted: #a0a0a0;
+            --muted: #666;
         }
 
         body {
@@ -23,168 +23,200 @@
             min-height: 100vh;
         }
 
-        header { padding: 20px; text-align: center; background: #111; border-bottom: 1px solid #222; }
-        
-        .cat-badge {
-            background: #222; padding: 6px 12px; border-radius: 50px;
-            font-size: 0.65rem; font-weight: 800; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 1px;
+        header {
+            padding: 30px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #111 0%, transparent 100%);
         }
 
-        .progress-wrap { height: 4px; background: #222; width: 100%; margin-top: 15px; }
-        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.4s; }
+        .logo { max-width: 150px; margin-bottom: 20px; }
 
-        main { flex: 1; padding: 15px; display: flex; align-items: center; justify-content: center; }
+        .progress-container {
+            width: 90%; max-width: 400px; margin: 0 auto;
+            text-align: right;
+        }
+
+        .progress-text { font-size: 0.7rem; font-weight: 900; color: #d4ff00; margin-bottom: 5px; }
+
+        .progress-wrap { height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        main { flex: 1; padding: 20px; display: flex; align-items: center; justify-content: center; }
 
         .card {
             background: var(--card); width: 100%; max-width: 450px;
-            border-radius: 25px; padding: 25px; box-sizing: border-box;
-            border: 1px solid #282828;
+            border-radius: 40px; padding: 40px; box-sizing: border-box;
+            position: relative; border: 1px solid #222;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
         }
 
-        h2 { font-weight: 900; font-size: 1.4rem; margin: 5px 0; text-transform: uppercase; color: var(--accent); }
-        .instructions { color: var(--muted); font-size: 0.8rem; margin-bottom: 15px; }
+        .ex-bg-num {
+            position: absolute; top: 20px; right: 30px;
+            font-size: 6rem; font-weight: 900;
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            z-index: 0; pointer-events: none;
+        }
+
+        .content { position: relative; z-index: 1; }
+
+        .cat-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+        h2 { font-weight: 900; font-size: 1.8rem; margin: 10px 0; text-transform: uppercase; letter-spacing: -1px; }
+        
+        .instructions { color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; line-height: 1.5; }
 
         .video-container {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
+            width: 100%; aspect-ratio: 16/9; background: #000;
+            border-radius: 24px; overflow: hidden; margin-bottom: 30px;
             border: 1px solid #333;
         }
-
         iframe { width: 100%; height: 100%; border: none; }
 
-        .counter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .stat-box { background: #000; padding: 12px; border-radius: 12px; text-align: center; border: 1px solid #222; }
-        .stat-label { display: block; font-size: 0.55rem; color: var(--muted); text-transform: uppercase; }
-        .stat-val { font-size: 1.2rem; font-weight: 900; color: var(--text); }
+        .stats-row { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .stat-item span { display: block; font-size: 0.6rem; color: var(--muted); text-transform: uppercase; }
+        .stat-item b { font-size: 1.8rem; font-weight: 900; }
 
-        .main-btn {
-            width: 100%; padding: 20px; border-radius: 15px; border: none;
-            font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1rem;
-            text-transform: uppercase; cursor: pointer; transition: 0.2s;
+        /* Cronòmetre */
+        .timer-display { font-size: 2.5rem; font-weight: 900; color: #d4ff00; text-align: center; margin-bottom: 20px; display: none; }
+
+        .btn-group { display: flex; gap: 10px; width: 100%; }
+
+        .btn-count {
+            flex: 0 0 75%; padding: 22px; border-radius: 20px; border: none;
+            font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 0.9rem;
+            text-transform: uppercase; cursor: pointer;
             background: var(--accent); color: #000;
         }
 
-        .main-btn.next { background: #fff; }
-
-        .warning {
-            margin-top: 15px; font-size: 0.65rem; color: #ff4444;
-            text-align: center; font-weight: 700; text-transform: uppercase;
+        .btn-next {
+            flex: 1; padding: 22px; border-radius: 20px; border: 1px solid #333;
+            background: transparent; color: #fff; cursor: pointer;
+            font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
         }
+
+        .list-info { font-size: 0.75rem; color: #888; text-align: left; padding-left: 15px; margin-top: 20px; display: none; }
     </style>
 </head>
 <body>
 
 <header>
-    <span class="cat-badge" id="cat-text">Carregant...</span>
-    <div class="progress-wrap"><div class="progress-fill" id="p-bar"></div></div>
+    <img src="https://jfcentredefisioterapia.com/wp-content/uploads/2025/07/jf-fisioterapia-1.png" class="logo" alt="JF Fisioteràpia">
+    <div class="progress-container">
+        <div class="progress-text" id="progressText">0% — EXERCICI 1/11</div>
+        <div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
+    </div>
 </header>
 
 <main>
     <div class="card">
-        <h2 id="title">Títol</h2>
-        <p class="instructions" id="desc">Descripció de l'exercici</p>
+        <div class="ex-bg-num" id="exNum">01</div>
+        <div class="content">
+            <div class="cat-label" id="catLabel">Mobilitat Matí</div>
+            <h2 id="exTitle">Cat/Camel</h2>
+            <p class="instructions" id="exDesc">Cada matí: 10-15 repeticions [cite: 2, 4]</p>
 
-        <div class="video-container" id="video-frame">
+            <div class="video-container" id="videoBox"></div>
+
+            <div id="repsStats" class="stats-row">
+                <div class="stat-item"><span>Objectiu</span><b id="goalVal">15</b></div>
+                <div class="stat-item"><span>Fetes</span><b id="currVal">0</b></div>
             </div>
 
-        <div class="counter-grid">
-            <div class="stat-box">
-                <span class="stat-label">Objectiu</span>
-                <span class="stat-val" id="goal">15</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-label">Fetes</span>
-                <span class="stat-val" id="curr">0</span>
+            <div id="timerDisplay" class="timer-display">00:00</div>
+
+            <ul id="extraInfo" class="list-info"></ul>
+
+            <div class="btn-group">
+                <button class="btn-count" id="mainBtn" onclick="handleMain()">Comptar</button>
+                <button class="btn-next" onclick="nextEx()">→</button>
             </div>
         </div>
-
-        <button class="main-btn" id="go-btn" onclick="handlePress()">Comptar Repetició</button>
-        
-        <div class="warning">⚠ Dolor màxim: 3/10</div>
     </div>
 </main>
 
 <script>
-    // Funció per netejar la URL de Drive i fer-la reproduïble en iframe
-    function getEmbedUrl(url) {
-        return url.replace('/view', '/preview');
-    }
-
     const data = [
-        { t: "Cat/Camel", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1Yy0PFXDm23_z1i3OxAvM9q1v-e12ouSq/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Dorsal quadrupèdia", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1Y4XAoUatDpi9iY-lB25P3MHtYG-D1nqt/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Dorsal foam roller", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/16RmoJ5EYa1RERpbujP3E0rDDP6wEazI-/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Rotació decúbit lateral", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1oW-xTXMxIky94Ehv7FBk7C7914Ev_wLm/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Rotació decúbit supí", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1LDflA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Rotació dorsal paret", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/17Ch7Qr_GFa2-bScT48Sjy2sP2Dn5_bp_/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Rotació dorsal (variant)", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1hMREG9GFWH3_ImTZ1mMwAp2iiYG5KKaM/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Hip thrust", d: 15, c: "Força", v: "https://drive.google.com/file/d/1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7/view", i: "3 dies/setmana, 3 x 10-15 reps [cite: 2, 6]" },
-        { t: "Gluti mig - planxa", d: 15, c: "Força", v: "https://drive.google.com/file/d/1OiiUaTYDzQGLhEtkAj5JLbPq6VSb2qU-/view", i: "3 dies/setmana, 3 x 10-15 reps [cite: 2, 6]" },
-        { t: "Squat a calaix", d: 15, c: "Força", v: "https://drive.google.com/file/d/1kAyDJ6SFC_l15916aaS6e3YcF8t7E8kT/view", i: "3 dies/setmana, 3 x 10-15 reps [cite: 2, 6]" },
-        { t: "Estirament posterior", d: 1, c: "Vespre", v: "https://drive.google.com/file/d/1LDflA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", i: "Mantenir 5-10 minuts. Gluti a terra i genolls estesos [cite: 2, 9, 11, 12]" }
+        { t: "Cat/Camel", d: 15, c: "Mobilitat Matí", v: "1Yy0PFXDm23_z1i3OxAvM9q1v-e12ouSq", i: "10-15 repeticions [cite: 4]" },
+        { t: "Dorsal quadrupèdia", d: 15, c: "Mobilitat Matí", v: "1Y4XAoUatDpi9iY-lB25P3MHtYG-D1nqt", i: "10-15 repeticions [cite: 4]" },
+        { t: "Dorsal foam roller", d: 15, c: "Mobilitat Matí", v: "16RmoJ5EYa1RERpbujP3E0rDDP6wEazI-", i: "10-15 repeticions [cite: 4]" },
+        { t: "Rotació decúbit lateral", d: 15, c: "Mobilitat Matí", v: "1oW-xTXMxIky94Ehv7FBk7C7914Ev_wLm", i: "10-15 repeticions [cite: 4]" },
+        { t: "Rotació decúbit supí", d: 15, c: "Mobilitat Matí", v: "1LDflA1NHhvWHk7mkSNcW4esEyj8cZgPj", i: "10-15 repeticions [cite: 4]" },
+        { t: "Rotació dorsal paret", d: 15, c: "Mobilitat Matí", v: "17Ch7Qr_GFa2-bScT48Sjy2sP2Dn5_bp_", i: "10-15 repeticions [cite: 4]" },
+        { t: "Rotació dorsal (variant)", d: 15, c: "Mobilitat Matí", v: "1hMREG9GFWH3_ImTZ1mMwAp2iiYG5KKaM", i: "10-15 repeticions [cite: 4]" },
+        { t: "Hip thrust", d: 15, c: "Força", v: "1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7", i: "3 sèries de 10-15 reps [cite: 6]" },
+        { t: "Gluti mig - planxa", d: 15, c: "Força", v: "1OiiUaTYDzQGLhEtkAj5JLbPq6VSb2qU-", i: "3 sèries de 10-15 reps [cite: 6]" },
+        { t: "Squat a calaix", d: 15, c: "Força", v: "1kAyDJ6SFC_l15916aaS6e3YcF8t7E8kT", i: "3 sèries de 10-15 reps [cite: 6]" },
+        { t: "Cadena Posterior", d: 0, c: "Vespre", v: "1PbvOW70tQ4Sajl1rbJMKIkSwdjEw_q0-", i: "5-10 minuts mantinguts [cite: 9]", 
+          notes: ["Gluti sempre a terra [cite: 11]", "Genolls en extensió màxima [cite: 12]", "Respiració lenta nasal [cite: 13]", "Sensació còmoda, no dolorosa [cite: 14]"] 
+        }
     ];
 
-    let idx = 0; 
-    let currentReps = 0;
+    let idx = 0; let reps = 0; let timerInterval; let seconds = 0;
 
     function render() {
         const item = data[idx];
-        document.getElementById('title').innerText = item.t;
-        document.getElementById('desc').innerText = item.i;
-        document.getElementById('cat-text').innerText = item.c;
-        document.getElementById('goal').innerText = item.d;
-        document.getElementById('curr').innerText = currentReps;
+        document.getElementById('exNum').innerText = (idx + 1).toString().padStart(2, '0');
+        document.getElementById('exTitle').innerText = item.t;
+        document.getElementById('exDesc').innerText = item.i;
+        document.getElementById('catLabel').innerText = item.c;
+        document.getElementById('goalVal').innerText = item.d;
+        document.getElementById('currVal').innerText = reps;
+        document.getElementById('videoBox').innerHTML = `<iframe src="https://drive.google.com/file/d/${item.v}/preview"></iframe>`;
         
-        // Progress bar
-        document.getElementById('p-bar').style.width = ((idx / data.length) * 100) + "%";
+        // Progress
+        const percent = Math.round((idx / data.length) * 100);
+        document.getElementById('progressBar').style.width = percent + "%";
+        document.getElementById('progressText').innerText = `${percent}% — EXERCICI ${idx + 1}/${data.length}`;
 
-        // Actualitzar vídeo només si canviem d'exercici
-        const frameContainer = document.getElementById('video-frame');
-        const embedUrl = getEmbedUrl(item.v);
-        frameContainer.innerHTML = `<iframe src="${embedUrl}" allow="autoplay"></iframe>`;
-
-        // Botó
-        const btn = document.getElementById('go-btn');
-        if (currentReps >= item.d) {
-            btn.innerText = "Següent Exercici →";
-            btn.classList.add('next');
+        // Cronòmetre o Reps
+        if (item.d === 0) {
+            document.getElementById('repsStats').style.display = 'none';
+            document.getElementById('timerDisplay').style.display = 'block';
+            document.getElementById('mainBtn').innerText = "Iniciar Crono";
+            document.getElementById('extraInfo').style.display = 'block';
+            document.getElementById('extraInfo').innerHTML = item.notes.map(n => `<li>${n}</li>`).join('');
         } else {
-            btn.innerText = item.d > 1 ? "Comptar Repetició" : "Marcar com Fet";
-            btn.classList.remove('next');
+            document.getElementById('repsStats').style.display = 'flex';
+            document.getElementById('timerDisplay').style.display = 'none';
+            document.getElementById('mainBtn').innerText = "Comptar";
+            document.getElementById('extraInfo').style.display = 'none';
+            clearInterval(timerInterval);
         }
     }
 
-    function handlePress() {
-        const item = data[idx];
-        if (currentReps < item.d) {
-            currentReps++;
-            document.getElementById('curr').innerText = currentReps;
-            if (currentReps >= item.d) {
-                render(); // Actualitza el botó a "Següent"
-            }
+    function handleMain() {
+        if (data[idx].d > 0) {
+            reps++;
+            document.getElementById('currVal').innerText = reps;
         } else {
-            // Passar al següent exercici
-            if (idx < data.length - 1) {
-                idx++;
-                currentReps = 0;
-                render();
+            if (!timerInterval) {
+                document.getElementById('mainBtn').innerText = "Aturar";
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    let m = Math.floor(seconds / 60).toString().padStart(2, '0');
+                    let s = (seconds % 60).toString().padStart(2, '0');
+                    document.getElementById('timerDisplay').innerText = `${m}:${s}`;
+                }, 1000);
             } else {
-                alert("Rutina completada! [cite: 1]");
-                idx = 0;
-                currentReps = 0;
-                render();
+                clearInterval(timerInterval);
+                timerInterval = null;
+                document.getElementById('mainBtn').innerText = "Reprendre";
             }
         }
     }
 
-    // Inici
+    function nextEx() {
+        if (idx < data.length - 1) {
+            idx++; reps = 0; seconds = 0;
+            document.getElementById('timerDisplay').innerText = "00:00";
+            render();
+        } else {
+            alert("Rutina Finalitzada!");
+        }
+    }
+
     render();
 </script>
-
 </body>
 </html>
