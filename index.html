@@ -7,221 +7,183 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f0f0f;
-            --card: #1a1a1a;
-            --accent: #ccff00; 
+            --bg: #0a0a0a;
+            --card: #161616;
+            --accent: #d4ff00; 
             --text: #ffffff;
-            --muted: #888;
+            --muted: #a0a0a0;
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column;
             min-height: 100vh;
         }
 
-        header {
-            padding: 20px;
-            text-align: center;
-            background: #1a1a1a;
+        header { padding: 20px; text-align: center; background: #111; border-bottom: 1px solid #222; }
+        
+        .cat-badge {
+            background: #222; padding: 6px 12px; border-radius: 50px;
+            font-size: 0.65rem; font-weight: 800; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .category-pill {
-            background: #333;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-transform: uppercase;
+        .progress-wrap { height: 4px; background: #222; width: 100%; margin-top: 15px; }
+        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.4s; }
+
+        main { flex: 1; padding: 15px; display: flex; align-items: center; justify-content: center; }
+
+        .card {
+            background: var(--card); width: 100%; max-width: 450px;
+            border-radius: 25px; padding: 25px; box-sizing: border-box;
+            border: 1px solid #282828;
         }
 
-        .progress-container {
-            height: 4px;
-            background: #333;
+        h2 { font-weight: 900; font-size: 1.4rem; margin: 5px 0; text-transform: uppercase; color: var(--accent); }
+        .instructions { color: var(--muted); font-size: 0.8rem; margin-bottom: 15px; }
+
+        .video-container {
             width: 100%;
-            margin-top: 15px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: var(--accent);
-            width: 0%;
-            transition: width 0.4s ease;
-        }
-
-        main {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .exercise-card {
-            background: var(--card);
-            width: 100%;
-            max-width: 450px;
-            border-radius: 30px;
-            padding: 30px;
-            box-sizing: border-box;
-            position: relative;
-            border: 1px solid #222;
-        }
-
-        h2 { font-weight: 900; font-size: 1.6rem; margin: 10px 0; text-transform: uppercase; }
-        p.desc { color: var(--muted); margin-bottom: 20px; font-size: 0.9rem; }
-
-        .video-btn {
-            width: 100%;
-            border-radius: 15px;
-            background: #252525;
-            display: block;
-            margin-bottom: 20px;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            font-weight: 700;
-            padding: 20px 0;
-            text-align: center;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 25px;
+            aspect-ratio: 16/9;
             background: #000;
-            padding: 15px;
             border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid #333;
         }
 
-        .stat-item span { display: block; font-size: 0.6rem; color: var(--muted); text-transform: uppercase; }
-        .stat-item b { font-size: 1.2rem; color: var(--accent); }
+        iframe { width: 100%; height: 100%; border: none; }
 
-        .btn-main {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            width: 100%;
-            padding: 20px;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
+        .counter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-box { background: #000; padding: 12px; border-radius: 12px; text-align: center; border: 1px solid #222; }
+        .stat-label { display: block; font-size: 0.55rem; color: var(--muted); text-transform: uppercase; }
+        .stat-val { font-size: 1.2rem; font-weight: 900; color: var(--text); }
+
+        .main-btn {
+            width: 100%; padding: 20px; border-radius: 15px; border: none;
+            font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1rem;
+            text-transform: uppercase; cursor: pointer; transition: 0.2s;
+            background: var(--accent); color: #000;
         }
 
-        .pain-warning {
-            font-size: 0.7rem;
-            color: #ff4444;
-            margin-top: 20px;
-            text-align: center;
-            font-weight: 700;
+        .main-btn.next { background: #fff; }
+
+        .warning {
+            margin-top: 15px; font-size: 0.65rem; color: #ff4444;
+            text-align: center; font-weight: 700; text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="category-pill" id="cat-label">Carregant...</div>
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
+    <span class="cat-badge" id="cat-text">Carregant...</span>
+    <div class="progress-wrap"><div class="progress-fill" id="p-bar"></div></div>
 </header>
 
 <main>
-    <div class="exercise-card">
-        <h2 id="ex-title">Títol</h2>
-        <p class="desc" id="ex-desc">Descripció</p>
+    <div class="card">
+        <h2 id="title">Títol</h2>
+        <p class="instructions" id="desc">Descripció de l'exercici</p>
 
-        <a href="#" id="ex-link" target="_blank" class="video-btn">
-            🎬 OBRIR VÍDEO EXERCICI
-        </a>
-
-        <div class="stats">
-            <div class="stat-item">
-                <span>Objectiu</span>
-                <b id="ex-dosi">15</b>
+        <div class="video-container" id="video-frame">
             </div>
-            <div class="stat-item">
-                <span>Fetes</span>
-                <b id="ex-current">0</b>
+
+        <div class="counter-grid">
+            <div class="stat-box">
+                <span class="stat-label">Objectiu</span>
+                <span class="stat-val" id="goal">15</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Fetes</span>
+                <span class="stat-val" id="curr">0</span>
             </div>
         </div>
 
-        <button class="btn-main" id="actionBtn" onclick="handleAction()">Comptar</button>
+        <button class="main-btn" id="go-btn" onclick="handlePress()">Comptar Repetició</button>
         
-        <div class="pain-warning">
-            [span_0](start_span)⚠ DOLOR MÀXIM: 3/10[span_0](end_span)
-        </div>
+        <div class="warning">⚠ Dolor màxim: 3/10</div>
     </div>
 </main>
 
 <script>
-    const routine = [
-        [span_1](start_span){ title: "Cat/Camel", dosi: 15, cat: "Mobilitat Matí[span_1](end_span)[span_2](start_span)", video: "https://drive.google.com/file/d/1Yy0PFXDm23_z1i3OxAvM9q1v-e12ouSq/view", desc: "10-15 repeticions cada matí[span_2](end_span)" },
-        [span_3](start_span){ title: "Dorsal quadrupèdia", dosi: 15, cat: "Mobilitat Matí[span_3](end_span)[span_4](start_span)", video: "https://drive.google.com/file/d/1Y4XAoUatDpi9iY-IB25P3MH1YGD1nqt-/view", desc: "10-15 repeticions cada matí[span_4](end_span)" },
-        [span_5](start_span){ title: "Dorsal foam roller", dosi: 15, cat: "Mobilitat Matí[span_5](end_span)[span_6](start_span)", video: "https://drive.google.com/file/d/16RmoJ5EYa1RERpbujP3E0rDDP6wEazl-/view", desc: "10-15 repeticions cada matí[span_6](end_span)" },
-        [span_7](start_span){ title: "Rotació decúbit lateral", dosi: 15, cat: "Mobilitat Matí[span_7](end_span)[span_8](start_span)", video: "https://drive.google.com/file/d/1oW-xTXMxlky94Ehv7FBk7C7914Ev_wLm/view", desc: "10-15 repeticions cada matí[span_8](end_span)" },
-        [span_9](start_span){ title: "Rotació decúbit supí", dosi: 15, cat: "Mobilitat Matí[span_9](end_span)[span_10](start_span)", video: "https://drive.google.com/file/d/1LDfIA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", desc: "10-15 repeticions cada matí[span_10](end_span)" },
-        [span_11](start_span){ title: "Rotació dorsal paret", dosi: 15, cat: "Mobilitat Matí[span_11](end_span)[span_12](start_span)", video: "https://drive.google.com/file/d/17Ch7Qr_GFa2-bScT48Sjy2sP2Dn5_bp_/view", desc: "10-15 repeticions cada matí[span_12](end_span)" },
-        [span_13](start_span){ title: "Hip thrust", dosi: 15, cat: "Força[span_13](end_span)[span_14](start_span)[span_15](start_span)", video: "https://drive.google.com/file/d/1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7/view", desc: "3 dies/setmana, 10-15 repeticions[span_14](end_span)[span_15](end_span)" },
-        [span_16](start_span){ title: "Gluti mig planxa", dosi: 15, cat: "Força[span_16](end_span)[span_17](start_span)[span_18](start_span)", video: "https://drive.google.com/file/d/1OilUaTYDzQGLhEtkAj5JLbPq6VSb2qU-/view", desc: "3 dies/setmana, 10-15 repeticions[span_17](end_span)[span_18](end_span)" },
-        [span_19](start_span){ title: "Squat a calaix", dosi: 15, cat: "Força[span_19](end_span)[span_20](start_span)[span_21](start_span)", video: "https://drive.google.com/file/d/1kAyDJ6SFC_115916aaS6e3YcF8t7E8kT/view", desc: "3 dies/setmana, 10-15 repeticions[span_20](end_span)[span_21](end_span)" },
-        [span_22](start_span){ title: "Estirament posterior", dosi: 1, cat: "Estirament Vespre[span_22](end_span)[span_23](start_span)[span_24](start_span)", video: "https://drive.google.com/file/d/1LDfIA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", desc: "5-10 minuts mantenint la posició[span_23](end_span)[span_24](end_span)" }
+    // Funció per netejar la URL de Drive i fer-la reproduïble en iframe
+    function getEmbedUrl(url) {
+        return url.replace('/view', '/preview');
+    }
+
+    const data = [
+        { t: "Cat/Camel", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1Yy0PFXDm23_z1i3OxAvM9q1v-e12ouSq/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Dorsal quadrupèdia", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1Y4XAoUatDpi9iY-lB25P3MHtYG-D1nqt/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Dorsal foam roller", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/16RmoJ5EYa1RERpbujP3E0rDDP6wEazI-/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Rotació decúbit lateral", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1oW-xTXMxIky94Ehv7FBk7C7914Ev_wLm/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Rotació decúbit supí", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1LDflA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Rotació dorsal paret", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/17Ch7Qr_GFa2-bScT48Sjy2sP2Dn5_bp_/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Rotació dorsal (variant)", d: 15, c: "Mobilitat Matí", v: "https://drive.google.com/file/d/1hMREG9GFWH3_ImTZ1mMwAp2iiYG5KKaM/view", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Hip thrust", d: 15, c: "Força", v: "https://drive.google.com/file/d/1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7/view", i: "3 dies/setmana, 3 x 10-15 reps [cite: 2, 6]" },
+        { t: "Gluti mig - planxa", d: 15, c: "Força", v: "https://drive.google.com/file/d/1OiiUaTYDzQGLhEtkAj5JLbPq6VSb2qU-/view", i: "3 dies/setmana, 3 x 10-15 reps [cite: 2, 6]" },
+        { t: "Squat a calaix", d: 15, c: "Força", v: "https://drive.google.com/file/d/1kAyDJ6SFC_l15916aaS6e3YcF8t7E8kT/view", i: "3 dies/setmana, 3 x 10-15 reps [cite: 2, 6]" },
+        { t: "Estirament posterior", d: 1, c: "Vespre", v: "https://drive.google.com/file/d/1LDflA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", i: "Mantenir 5-10 minuts. Gluti a terra i genolls estesos [cite: 2, 9, 11, 12]" }
     ];
 
-    let currentIdx = 0;
-    let count = 0;
+    let idx = 0; 
+    let currentReps = 0;
 
-    function updateUI() {
-        const ex = routine[currentIdx];
-        document.getElementById('ex-title').innerText = ex.title;
-        document.getElementById('ex-desc').innerText = ex.desc;
-        document.getElementById('cat-label').innerText = ex.cat;
-        document.getElementById('ex-link').href = ex.video;
-        document.getElementById('ex-dosi').innerText = ex.dosi;
-        document.getElementById('ex-current').innerText = count;
+    function render() {
+        const item = data[idx];
+        document.getElementById('title').innerText = item.t;
+        document.getElementById('desc').innerText = item.i;
+        document.getElementById('cat-text').innerText = item.c;
+        document.getElementById('goal').innerText = item.d;
+        document.getElementById('curr').innerText = currentReps;
         
-        const progress = (currentIdx / routine.length) * 100;
-        document.getElementById('progressBar').style.width = progress + "%";
+        // Progress bar
+        document.getElementById('p-bar').style.width = ((idx / data.length) * 100) + "%";
 
-        const btn = document.getElementById('actionBtn');
-        if (count >= ex.dosi) {
-            btn.innerText = "SEGÜENT EXERCICI";
-            btn.style.background = "#ffffff";
+        // Actualitzar vídeo només si canviem d'exercici
+        const frameContainer = document.getElementById('video-frame');
+        const embedUrl = getEmbedUrl(item.v);
+        frameContainer.innerHTML = `<iframe src="${embedUrl}" allow="autoplay"></iframe>`;
+
+        // Botó
+        const btn = document.getElementById('go-btn');
+        if (currentReps >= item.d) {
+            btn.innerText = "Següent Exercici →";
+            btn.classList.add('next');
         } else {
-            btn.innerText = "COMPTAR REPETICIÓ";
-            btn.style.background = "var(--accent)";
+            btn.innerText = item.d > 1 ? "Comptar Repetició" : "Marcar com Fet";
+            btn.classList.remove('next');
         }
     }
 
-    function handleAction() {
-        const ex = routine[currentIdx];
-        if (count < ex.dosi) {
-            count++;
+    function handlePress() {
+        const item = data[idx];
+        if (currentReps < item.d) {
+            currentReps++;
+            document.getElementById('curr').innerText = currentReps;
+            if (currentReps >= item.d) {
+                render(); // Actualitza el botó a "Següent"
+            }
         } else {
-            if (currentIdx < routine.length - 1) {
-                currentIdx++;
-                count = 0;
+            // Passar al següent exercici
+            if (idx < data.length - 1) {
+                idx++;
+                currentReps = 0;
+                render();
             } else {
-                alert("Rutina finalitzada!");
-                currentIdx = 0;
-                count = 0;
+                alert("Rutina completada! [cite: 1]");
+                idx = 0;
+                currentReps = 0;
+                render();
             }
         }
-        updateUI();
     }
 
-    updateUI();
+    // Inici
+    render();
 </script>
 
 </body>
