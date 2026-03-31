@@ -7,10 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Degradat atmosfèric basat en la imatge */
             --bg-gradient: linear-gradient(135deg, #0f2d4e 0%, #1e3a5f 25%, #4a4e8a 50%, #2a1b3d 75%, #0a0a0a 100%);
-            --card-bg: rgba(0, 0, 0, 0.6);
-            --btn-solid: #ffffff; /* Botó blanc sòlid per a màxim contrast */
+            --card-bg: rgba(0, 0, 0, 0.65);
+            --btn-solid: #ffffff;
             --btn-text: #000000;
             --accent-red: #ff3c3c;
             --text-main: #ffffff;
@@ -26,101 +25,108 @@
             min-height: 100vh;
         }
 
-        header { padding: 10px 10px; text-align: center; }
-
-        /* Logo un 25% més petit que l'anterior */
-        .logo { max-width: 85px; margin-bottom: 5px; opacity: 0.9; }
-
+        /* Barra de progrés més alta (10px total) i text superior */
+        header { padding: 15px 10px 5px 10px; }
+        
         .progress-container { width: 98%; margin: 0 auto; }
 
-        .progress-text { 
-            font-size: 0.7rem; 
-            font-weight: 900; 
-            color: #fff; 
-            margin-bottom: 3px; 
-            text-align: right; 
-            letter-spacing: 1px;
+        .progress-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 6px;
         }
 
-        /* Barra de 6px de gruix i sense arrodonir */
-        .progress-wrap { height: 6px; background: rgba(255,255,255,0.15); border-radius: 0; overflow: hidden; }
+        .progress-label { font-size: 0.8rem; font-weight: 900; letter-spacing: 1.5px; }
+        .progress-date { font-size: 0.7rem; font-weight: 400; opacity: 0.8; }
+
+        .progress-wrap { height: 10px; background: rgba(255,255,255,0.15); border-radius: 0; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--btn-solid); width: 0%; transition: 0.5s ease; }
 
-        main { flex: 1; padding: 5px; display: flex; align-items: center; justify-content: center; }
+        main { flex: 1; padding: 10px; display: flex; align-items: center; justify-content: center; position: relative; }
 
         .card {
             background: var(--card-bg); 
             width: 100%; 
             max-width: 550px;
-            border-radius: 12px; /* Cantonades més rectes */
-            padding: 12px; 
+            border-radius: 12px;
+            padding: 15px; 
             box-sizing: border-box;
             position: relative; 
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.12);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
+        /* Número d'exercici amb més visibilitat */
         .ex-bg-num {
-            position: absolute; top: 5px; right: 12px;
-            font-size: 5.5rem; font-weight: 900;
-            color: rgba(255,255,255,0.04);
+            position: absolute; top: 5px; right: 15px;
+            font-size: 6.5rem; font-weight: 900;
+            color: rgba(255,255,255,0.08);
             z-index: 0; pointer-events: none;
+            line-height: 1;
         }
 
         .content { position: relative; z-index: 1; }
 
-        .cat-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #7da9ff; }
+        .cat-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #7da9ff; margin-bottom: 5px; display: block; }
 
-        h2 { font-weight: 900; font-size: 1.5rem; margin: 2px 0; text-transform: uppercase; }
+        h2 { font-weight: 900; font-size: 1.7rem; margin: 0 0 5px 0; text-transform: uppercase; }
         
-        .instructions { color: #ddd; font-size: 0.8rem; margin-bottom: 12px; line-height: 1.2; }
+        .instructions { color: #eee; font-size: 0.85rem; margin-bottom: 15px; line-height: 1.3; }
 
-        /* Vídeo més gran (menys aire lateral) */
         .video-container {
-            width: 100%; 
-            aspect-ratio: 16/9; 
-            background: #000;
-            border-radius: 4px; 
-            overflow: hidden; 
-            margin-bottom: 15px;
+            width: 100%; aspect-ratio: 16/9; background: #000;
+            border-radius: 6px; overflow: hidden; margin-bottom: 20px;
             border: 1px solid rgba(255,255,255,0.1);
         }
         iframe { width: 100%; height: 100%; border: none; }
 
-        .stats-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        
-        /* Tipografia de labels gran i llegible */
-        .stat-item span { display: block; font-size: 1rem; color: #fff; font-weight: 900; text-transform: uppercase; }
-        .stat-item b { font-size: 2.8rem; font-weight: 900; color: var(--accent-red); line-height: 1; }
+        .stats-row { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .stat-item span { display: block; font-size: 1.1rem; color: #fff; font-weight: 900; text-transform: uppercase; }
+        .stat-item b { font-size: 3.2rem; font-weight: 900; color: var(--accent-red); line-height: 1; }
 
-        .timer-display { font-size: 3.5rem; font-weight: 900; color: var(--accent-red); text-align: center; margin-bottom: 10px; display: none; }
+        .timer-display { font-size: 4rem; font-weight: 900; color: var(--accent-red); text-align: center; margin-bottom: 15px; display: none; }
 
-        .btn-group { display: flex; gap: 6px; width: 100%; }
+        .btn-group { display: flex; gap: 8px; width: 100%; margin-bottom: 15px; }
 
-        /* Botó sòlid blanc amb contrast màxim */
         .btn-count {
-            flex: 0 0 75%; padding: 20px; border-radius: 8px; border: none;
-            font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.1rem;
+            flex: 0 0 75%; padding: 22px; border-radius: 10px; border: none;
+            font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.2rem;
             text-transform: uppercase; cursor: pointer;
             background: var(--btn-solid); color: var(--btn-text);
         }
 
         .btn-next {
-            flex: 1; padding: 20px; border-radius: 8px; border: 2px solid var(--btn-solid);
+            flex: 1; padding: 22px; border-radius: 10px; border: 2px solid var(--btn-solid);
             background: transparent; color: var(--btn-solid); cursor: pointer;
-            font-size: 1.5rem; font-weight: 900;
+            font-size: 1.8rem; font-weight: 900; display: flex; align-items: center; justify-content: center;
         }
 
-        .list-info { font-size: 0.85rem; color: #fff; margin-top: 15px; padding-left: 20px; display: none; font-weight: 400; }
-        .list-info li { margin-bottom: 6px; }
+        /* Botó Torna a començar */
+        .btn-reset {
+            width: 100%; background: transparent; color: rgba(255,255,255,0.4);
+            border: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem;
+            text-transform: uppercase; font-weight: 700; cursor: pointer;
+            letter-spacing: 1px; margin-top: 5px;
+        }
+
+        .list-info { font-size: 0.9rem; color: #fff; margin: 15px 0; padding-left: 20px; display: none; }
+        .list-info li { margin-bottom: 8px; }
+
+        /* Footer amb logo molt petit */
+        footer { padding: 20px; text-align: center; }
+        .logo-footer { max-width: 65px; opacity: 0.6; }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="https://jfcentredefisioterapia.com/wp-content/uploads/2025/07/jf-fisioterapia-1.png" class="logo" alt="JF Fisioteràpia">
     <div class="progress-container">
-        <div class="progress-text" id="progressText">0% — 1/11</div>
+        <div class="progress-header-row">
+            <div class="progress-label">PROGRÉS <span id="percentNum">0%</span></div>
+            <div class="progress-date" id="currentDate">--/--/----</div>
+        </div>
         <div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
     </div>
 </header>
@@ -129,9 +135,9 @@
     <div class="card">
         <div class="ex-bg-num" id="exNum">01</div>
         <div class="content">
-            <div class="cat-label" id="catLabel">Mobilitat Matí</div>
+            <span class="cat-label" id="catLabel">Mobilitat Matí</span>
             <h2 id="exTitle">Cat/Camel</h2>
-            <p class="instructions" id="exDesc">10-15 repeticions [cite: 2, 4]</p>
+            <p class="instructions" id="exDesc">10-15 repeticions</p>
 
             <div class="video-container" id="videoBox"></div>
 
@@ -147,33 +153,43 @@
                 <button class="btn-count" id="mainBtn" onclick="handleMain()">Comptar</button>
                 <button class="btn-next" onclick="nextEx()">→</button>
             </div>
+
+            <button class="btn-reset" onclick="resetRoutine()">↺ Torna a començar</button>
         </div>
     </div>
 </main>
 
+<footer>
+    <img src="https://jfcentredefisioterapia.com/wp-content/uploads/2025/07/jf-fisioterapia-1.png" class="logo-footer" alt="JF Logo">
+</footer>
+
 <script>
     const data = [
-        { t: "Cat/Camel", d: 15, c: "Mobilitat Matí", v: "1Yy0PFXDm23_z1i3OxAvM9q1v-e12ouSq", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Dorsal quadrupèdia", d: 15, c: "Mobilitat Matí", v: "1Y4XAoUatDpi9iY-lB25P3MHtYG-D1nqt", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Dorsal foam roller", d: 15, c: "Mobilitat Matí", v: "16RmoJ5EYa1RERpbujP3E0rDDP6wEazI-", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Rotació decúbit lateral", d: 15, c: "Mobilitat Matí", v: "1oW-xTXMxIky94Ehv7FBk7C7914Ev_wLm", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Rotació decúbit supí", d: 15, c: "Mobilitat Matí", v: "1LDflA1NHhvWHk7mkSNcC4esEyj8cZgPj", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Rotació dorsal paret", d: 15, c: "Mobilitat Matí", v: "17Ch7Qr_GFa2-bScT48Sjy2sP2Dn5_bp_", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Rotació dorsal (variant)", d: 15, c: "Mobilitat Matí", v: "1hMREG9GFWH3_ImTZ1mMwAp2iiYG5KKaM", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
-        { t: "Hip thrust", d: 15, c: "Força", v: "1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7", i: "3 sèries de 10-15 reps [cite: 2, 6]" },
-        { t: "Gluti mig - planxa", d: 15, c: "Força", v: "1OiiUaTYDzQGLhEtkAj5JLbPq6VSb2qU-", i: "3 sèries de 10-15 reps [cite: 2, 6]" },
-        { t: "Squat a calaix", d: 15, c: "Força", v: "1kAyDJ6SFC_l15916aaS6e3YcF8t7E8kT", i: "3 sèries de 10-15 reps [cite: 2, 6]" },
-        { t: "Cadena Posterior", d: 0, c: "Vespre", v: "1PbvOW70tQ4Sajl1rbJMKIkSwdjEw_q0-", i: "5-10 minuts mantinguts [cite: 2, 9]", 
+        { t: "Cat/Camel", d: 15, c: "Mobilitat Matí", v: "1Yy0PFXDm23_z1i3OxAvM9q1v-e12ouSq", i: "Cada matí: 10-15 repeticions" },
+        { t: "Dorsal quadrupèdia", d: 15, c: "Mobilitat Matí", v: "1Y4XAoUatDpi9iY-lB25P3MHtYG-D1nqt", i: "Cada matí: 10-15 repeticions" },
+        { t: "Dorsal foam roller", d: 15, c: "Mobilitat Matí", v: "16RmoJ5EYa1RERpbujP3E0rDDP6wEazI-", i: "Cada matí: 10-15 repeticions" },
+        { t: "Rotació decúbit lateral", d: 15, c: "Mobilitat Matí", v: "1oW-xTXMxIky94Ehv7FBk7C7914Ev_wLm", i: "Cada matí: 10-15 repeticions" },
+        { t: "Rotació decúbit supí", d: 15, c: "Mobilitat Matí", v: "1LDflA1NHhvWHk7mkSNcC4esEyj8cZgPj", i: "Cada matí: 10-15 repeticions" },
+        { t: "Rotació dorsal paret", d: 15, c: "Mobilitat Matí", v: "17Ch7Qr_GFa2-bScT48Sjy2sP2Dn5_bp_", i: "Cada matí: 10-15 repeticions" },
+        { t: "Rotació dorsal (variant)", d: 15, c: "Mobilitat Matí", v: "1hMREG9GFWH3_ImTZ1mMwAp2iiYG5KKaM", i: "Cada matí: 10-15 repeticions" },
+        { t: "Hip thrust", d: 15, c: "Força", v: "1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7", i: "3 sèries de 10-15 reps" },
+        { t: "Gluti mig - planxa", d: 15, c: "Força", v: "1OiiUaTYDzQGLhEtkAj5JLbPq6VSb2qU-", i: "3 sèries de 10-15 reps" },
+        { t: "Squat a calaix", d: 15, c: "Força", v: "1kAyDJ6SFC_l15916aaS6e3YcF8t7E8kT", i: "3 sèries de 10-15 reps" },
+        { t: "Cadena Posterior", d: 0, c: "Vespre", v: "1PbvOW70tQ4Sajl1rbJMKIkSwdjEw_q0-", i: "5-10 minuts mantinguts", 
           notes: [
-            "El gluti sempre ha de tocar a terra [cite: 11]", 
-            "Genolls en extensió màxima [cite: 12]", 
-            "Respiració lenta i controlada (preferentment nasal) [cite: 13]", 
-            "Sensació d'estirament còmoda, no dolorosa [cite: 14]"
+            "El gluti sempre ha de tocar a terra", 
+            "Genolls en extensió màxima", 
+            "Respiració lenta i controlada", 
+            "Sensació d'estirament còmoda, no dolorosa"
           ] 
         }
     ];
 
     let idx = 0; let reps = 0; let timerInterval; let seconds = 0;
+
+    // Data d'avui
+    const today = new Date();
+    document.getElementById('currentDate').innerText = today.toLocaleDateString('ca-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
     function render() {
         const item = data[idx];
@@ -187,7 +203,7 @@
         
         const percent = Math.round((idx / data.length) * 100);
         document.getElementById('progressBar').style.width = percent + "%";
-        document.getElementById('progressText').innerText = `${percent}% — ${idx + 1}/${data.length}`;
+        document.getElementById('percentNum').innerText = percent + "%";
 
         if (item.d === 0) {
             document.getElementById('repsStats').style.display = 'none';
@@ -228,7 +244,20 @@
             idx++; reps = 0; seconds = 0;
             document.getElementById('timerDisplay').innerText = "00:00";
             render();
-        } else { alert("Rutina Finalitzada!"); }
+        } else {
+            document.getElementById('progressBar').style.width = "100%";
+            document.getElementById('percentNum').innerText = "100%";
+            alert("Rutina Finalitzada!");
+        }
+    }
+
+    function resetRoutine() {
+        if(confirm("Vols tornar a començar la rutina des del principi?")) {
+            idx = 0; reps = 0; seconds = 0;
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+            document.getElementById('timerDisplay').innerText = "00:00";
+            render();
+        }
     }
 
     render();
