@@ -7,12 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Nou esquema de colors: Vermell/Blau/Negre */
-            --bg-gradient: radial-gradient(circle at top right, #1a0505, #050505, #050a1a);
-            --card-bg: rgba(20, 20, 20, 0.8);
-            --accent: linear-gradient(135deg, #ff3c3c 0%, #3c78ff 100%);
+            /* Degradat atmosfèric basat en la imatge */
+            --bg-gradient: linear-gradient(135deg, #0f2d4e 0%, #1e3a5f 25%, #4a4e8a 50%, #2a1b3d 75%, #0a0a0a 100%);
+            --card-bg: rgba(0, 0, 0, 0.6);
+            --btn-solid: #ffffff; /* Botó blanc sòlid per a màxim contrast */
+            --btn-text: #000000;
+            --accent-red: #ff3c3c;
             --text-main: #ffffff;
-            --text-secondary: #cccccc;
         }
 
         body {
@@ -25,97 +26,93 @@
             min-height: 100vh;
         }
 
-        header {
-            padding: 15px 10px;
-            text-align: center;
-        }
+        header { padding: 10px 10px; text-align: center; }
 
-        /* Logo 25% més petit */
-        .logo { max-width: 110px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.1)); }
+        /* Logo un 25% més petit que l'anterior */
+        .logo { max-width: 85px; margin-bottom: 5px; opacity: 0.9; }
 
-        .progress-container { width: 95%; margin: 0 auto; }
+        .progress-container { width: 98%; margin: 0 auto; }
 
         .progress-text { 
-            font-size: 0.75rem; 
+            font-size: 0.7rem; 
             font-weight: 900; 
-            color: var(--text-main); 
-            margin-bottom: 4px; 
+            color: #fff; 
+            margin-bottom: 3px; 
             text-align: right; 
             letter-spacing: 1px;
         }
 
-        /* Barra 2px més gruixuda (6px total) */
-        .progress-wrap { height: 6px; background: rgba(255,255,255,0.1); border-radius: 0; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.6s ease; }
+        /* Barra de 6px de gruix i sense arrodonir */
+        .progress-wrap { height: 6px; background: rgba(255,255,255,0.15); border-radius: 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--btn-solid); width: 0%; transition: 0.5s ease; }
 
-        main { flex: 1; padding: 10px; display: flex; align-items: flex-start; justify-content: center; }
+        main { flex: 1; padding: 5px; display: flex; align-items: center; justify-content: center; }
 
         .card {
             background: var(--card-bg); 
             width: 100%; 
-            max-width: 500px;
-            /* Cantonades més rectes */
-            border-radius: 15px; 
-            padding: 15px; 
+            max-width: 550px;
+            border-radius: 12px; /* Cantonades més rectes */
+            padding: 12px; 
             box-sizing: border-box;
             position: relative; 
-            border: 1px solid rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
         }
 
         .ex-bg-num {
-            position: absolute; top: 10px; right: 15px;
-            font-size: 5rem; font-weight: 900;
-            color: rgba(255,255,255,0.03);
+            position: absolute; top: 5px; right: 12px;
+            font-size: 5.5rem; font-weight: 900;
+            color: rgba(255,255,255,0.04);
             z-index: 0; pointer-events: none;
         }
 
         .content { position: relative; z-index: 1; }
 
-        .cat-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #3c78ff; }
+        .cat-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #7da9ff; }
 
-        h2 { font-weight: 900; font-size: 1.6rem; margin: 5px 0; text-transform: uppercase; color: #fff; }
+        h2 { font-weight: 900; font-size: 1.5rem; margin: 2px 0; text-transform: uppercase; }
         
-        .instructions { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.3; }
+        .instructions { color: #ddd; font-size: 0.8rem; margin-bottom: 12px; line-height: 1.2; }
 
-        /* Menys aire als costats per fer el vídeo més gran */
+        /* Vídeo més gran (menys aire lateral) */
         .video-container {
-            width: calc(100% + 0px); 
+            width: 100%; 
             aspect-ratio: 16/9; 
             background: #000;
-            border-radius: 8px; 
+            border-radius: 4px; 
             overflow: hidden; 
-            margin-bottom: 20px;
-            border: 1px solid #333;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         iframe { width: 100%; height: 100%; border: none; }
 
-        .stats-row { display: flex; justify-content: space-between; margin-bottom: 20px; padding: 0 5px; }
+        .stats-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
         
-        /* Tipografia de labels més gran i llegible */
-        .stat-item span { display: block; font-size: 0.9rem; color: #fff; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
-        .stat-item b { font-size: 2.2rem; font-weight: 900; color: #ff3c3c; }
+        /* Tipografia de labels gran i llegible */
+        .stat-item span { display: block; font-size: 1rem; color: #fff; font-weight: 900; text-transform: uppercase; }
+        .stat-item b { font-size: 2.8rem; font-weight: 900; color: var(--accent-red); line-height: 1; }
 
-        .timer-display { font-size: 3rem; font-weight: 900; color: #ff3c3c; text-align: center; margin-bottom: 15px; display: none; }
+        .timer-display { font-size: 3.5rem; font-weight: 900; color: var(--accent-red); text-align: center; margin-bottom: 10px; display: none; }
 
-        .btn-group { display: flex; gap: 8px; width: 100%; }
+        .btn-group { display: flex; gap: 6px; width: 100%; }
 
+        /* Botó sòlid blanc amb contrast màxim */
         .btn-count {
-            flex: 0 0 75%; padding: 18px; border-radius: 10px; border: none;
-            font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1rem;
+            flex: 0 0 75%; padding: 20px; border-radius: 8px; border: none;
+            font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.1rem;
             text-transform: uppercase; cursor: pointer;
-            background: var(--accent); color: #fff;
-            box-shadow: 0 4px 15px rgba(255, 60, 60, 0.3);
+            background: var(--btn-solid); color: var(--btn-text);
         }
 
         .btn-next {
-            flex: 1; padding: 18px; border-radius: 10px; border: 1px solid #444;
-            background: rgba(255,255,255,0.05); color: #fff; cursor: pointer;
-            font-size: 1.4rem; font-weight: 900;
+            flex: 1; padding: 20px; border-radius: 8px; border: 2px solid var(--btn-solid);
+            background: transparent; color: var(--btn-solid); cursor: pointer;
+            font-size: 1.5rem; font-weight: 900;
         }
 
-        .list-info { font-size: 0.8rem; color: #bbb; margin-top: 15px; padding-left: 20px; display: none; }
-        .list-info li { margin-bottom: 8px; }
+        .list-info { font-size: 0.85rem; color: #fff; margin-top: 15px; padding-left: 20px; display: none; font-weight: 400; }
+        .list-info li { margin-bottom: 6px; }
     </style>
 </head>
 <body>
@@ -134,7 +131,7 @@
         <div class="content">
             <div class="cat-label" id="catLabel">Mobilitat Matí</div>
             <h2 id="exTitle">Cat/Camel</h2>
-            <p class="instructions" id="exDesc">10-15 repeticions</p>
+            <p class="instructions" id="exDesc">10-15 repeticions [cite: 2, 4]</p>
 
             <div class="video-container" id="videoBox"></div>
 
@@ -156,18 +153,23 @@
 
 <script>
     const data = [
-        { t: "Cat/Camel", d: 15, c: "Mobilitat Matí", v: "1Yy0PFXDm23_z1i3OxAvM9q1v-e12ouSq", i: "Cada matí: 10-15 repeticions" },
-        { t: "Dorsal quadrupèdia", d: 15, c: "Mobilitat Matí", v: "1Y4XAoUatDpi9iY-lB25P3MHtYG-D1nqt", i: "Cada matí: 10-15 repeticions" },
-        { t: "Dorsal foam roller", d: 15, c: "Mobilitat Matí", v: "16RmoJ5EYa1RERpbujP3E0rDDP6wEazI-", i: "Cada matí: 10-15 repeticions" },
-        { t: "Rotació decúbit lateral", d: 15, c: "Mobilitat Matí", v: "1oW-xTXMxIky94Ehv7FBk7C7914Ev_wLm", i: "Cada matí: 10-15 repeticions" },
-        { t: "Rotació decúbit supí", d: 15, c: "Mobilitat Matí", v: "1LDflA1NHhvWHk7mkSNcW4esEyj8cZgPj", i: "Cada matí: 10-15 repeticions" },
-        { t: "Rotació dorsal paret", d: 15, c: "Mobilitat Matí", v: "17Ch7Qr_GFa2-bScT48Sjy2sP2Dn5_bp_", i: "Cada matí: 10-15 repeticions" },
-        { t: "Rotació dorsal (variant)", d: 15, c: "Mobilitat Matí", v: "1hMREG9GFWH3_ImTZ1mMwAp2iiYG5KKaM", i: "Cada matí: 10-15 repeticions" },
-        { t: "Hip thrust", d: 15, c: "Força", v: "1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7", i: "3 sèries de 10-15 reps" },
-        { t: "Gluti mig - planxa", d: 15, c: "Força", v: "1OiiUaTYDzQGLhEtkAj5JLbPq6VSb2qU-", i: "3 sèries de 10-15 reps" },
-        { t: "Squat a calaix", d: 15, c: "Força", v: "1kAyDJ6SFC_l15916aaS6e3YcF8t7E8kT", i: "3 sèries de 10-15 reps" },
-        { t: "Cadena Posterior", d: 0, c: "Vespre", v: "1PbvOW70tQ4Sajl1rbJMKIkSwdjEw_q0-", i: "5-10 minuts mantinguts", 
-          notes: ["El gluti sempre ha de tocar a terra", "Genolls en extensió màxima", "Respiració lenta i controlada", "Sensació còmoda, no dolorosa"] 
+        { t: "Cat/Camel", d: 15, c: "Mobilitat Matí", v: "1Yy0PFXDm23_z1i3OxAvM9q1v-e12ouSq", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Dorsal quadrupèdia", d: 15, c: "Mobilitat Matí", v: "1Y4XAoUatDpi9iY-lB25P3MHtYG-D1nqt", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Dorsal foam roller", d: 15, c: "Mobilitat Matí", v: "16RmoJ5EYa1RERpbujP3E0rDDP6wEazI-", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Rotació decúbit lateral", d: 15, c: "Mobilitat Matí", v: "1oW-xTXMxIky94Ehv7FBk7C7914Ev_wLm", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Rotació decúbit supí", d: 15, c: "Mobilitat Matí", v: "1LDflA1NHhvWHk7mkSNcC4esEyj8cZgPj", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Rotació dorsal paret", d: 15, c: "Mobilitat Matí", v: "17Ch7Qr_GFa2-bScT48Sjy2sP2Dn5_bp_", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Rotació dorsal (variant)", d: 15, c: "Mobilitat Matí", v: "1hMREG9GFWH3_ImTZ1mMwAp2iiYG5KKaM", i: "Cada matí: 10-15 repeticions [cite: 2, 4]" },
+        { t: "Hip thrust", d: 15, c: "Força", v: "1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7", i: "3 sèries de 10-15 reps [cite: 2, 6]" },
+        { t: "Gluti mig - planxa", d: 15, c: "Força", v: "1OiiUaTYDzQGLhEtkAj5JLbPq6VSb2qU-", i: "3 sèries de 10-15 reps [cite: 2, 6]" },
+        { t: "Squat a calaix", d: 15, c: "Força", v: "1kAyDJ6SFC_l15916aaS6e3YcF8t7E8kT", i: "3 sèries de 10-15 reps [cite: 2, 6]" },
+        { t: "Cadena Posterior", d: 0, c: "Vespre", v: "1PbvOW70tQ4Sajl1rbJMKIkSwdjEw_q0-", i: "5-10 minuts mantinguts [cite: 2, 9]", 
+          notes: [
+            "El gluti sempre ha de tocar a terra [cite: 11]", 
+            "Genolls en extensió màxima [cite: 12]", 
+            "Respiració lenta i controlada (preferentment nasal) [cite: 13]", 
+            "Sensació d'estirament còmoda, no dolorosa [cite: 14]"
+          ] 
         }
     ];
 
@@ -177,7 +179,7 @@
         const item = data[idx];
         document.getElementById('exNum').innerText = (idx + 1).toString().padStart(2, '0');
         document.getElementById('exTitle').innerText = item.t;
-        document.getElementById('exDesc').innerText = item.i;
+        document.getElementById('exDesc').innerHTML = item.i;
         document.getElementById('catLabel').innerText = item.c;
         document.getElementById('goalVal').innerText = item.d;
         document.getElementById('currVal').innerText = reps;
@@ -198,7 +200,7 @@
             document.getElementById('timerDisplay').style.display = 'none';
             document.getElementById('mainBtn').innerText = "Comptar";
             document.getElementById('extraInfo').style.display = 'none';
-            clearInterval(timerInterval); timerInterval = null;
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
         }
     }
 
