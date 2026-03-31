@@ -9,7 +9,7 @@
         :root {
             --bg: #0f0f0f;
             --card: #1a1a1a;
-            --accent: #ccff00; /* Verd llima esportiu */
+            --accent: #ccff00; 
             --text: #ffffff;
             --muted: #888;
         }
@@ -28,7 +28,7 @@
         header {
             padding: 20px;
             text-align: center;
-            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+            background: #1a1a1a;
         }
 
         .category-pill {
@@ -37,7 +37,6 @@
             border-radius: 20px;
             font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 1px;
             color: var(--accent);
             text-transform: uppercase;
         }
@@ -46,6 +45,7 @@
             height: 4px;
             background: #333;
             width: 100%;
+            margin-top: 15px;
         }
 
         .progress-bar {
@@ -72,49 +72,39 @@
             padding: 30px;
             box-sizing: border-box;
             position: relative;
-            overflow: hidden;
             border: 1px solid #222;
         }
 
-        .ex-number {
-            font-size: 8rem;
-            font-weight: 900;
-            color: rgba(204, 255, 0, 0.03);
-            position: absolute;
-            top: -20px;
-            right: 10px;
-        }
+        h2 { font-weight: 900; font-size: 1.6rem; margin: 10px 0; text-transform: uppercase; }
+        p.desc { color: var(--muted); margin-bottom: 20px; font-size: 0.9rem; }
 
-        h2 { font-weight: 900; font-size: 1.8rem; margin: 10px 0; text-transform: uppercase; }
-        p.desc { color: var(--muted); margin-bottom: 20px; font-size: 0.9rem; line-height: 1.4; }
-
-        .video-box {
+        .video-btn {
             width: 100%;
-            border-radius: 20px;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 15px;
+            background: #252525;
+            display: block;
             margin-bottom: 20px;
-            border: 1px solid #333;
-            text-decoration: none;
+            border: 1px solid var(--accent);
             color: var(--accent);
             font-weight: 700;
-            padding: 40px 0;
+            padding: 20px 0;
             text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
         .stats {
             display: flex;
             justify-content: space-between;
             margin-bottom: 25px;
-            background: #252525;
+            background: #000;
             padding: 15px;
             border-radius: 15px;
         }
 
         .stat-item span { display: block; font-size: 0.6rem; color: var(--muted); text-transform: uppercase; }
-        .stat-item b { font-size: 1.1rem; color: var(--accent); }
+        .stat-item b { font-size: 1.2rem; color: var(--accent); }
 
         .btn-main {
             background: var(--accent);
@@ -127,10 +117,7 @@
             font-weight: 900;
             text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.1s;
         }
-
-        .btn-main:active { transform: scale(0.98); }
 
         .pain-warning {
             font-size: 0.7rem;
@@ -144,57 +131,52 @@
 <body>
 
 <header>
-    <div class="category-pill" id="cat-label">Mobilitat Matí</div>
-    <div class="progress-container" style="margin-top:15px">
+    <div class="category-pill" id="cat-label">Carregant...</div>
+    <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 </header>
 
 <main>
     <div class="exercise-card">
-        <div class="ex-number" id="ex-num">01</div>
-        <h2 id="ex-title">Cat/Camel</h2>
-        <p class="desc" id="ex-desc">Mobilitat de columna cada dia al matí.</p>
+        <h2 id="ex-title">Títol</h2>
+        <p class="desc" id="ex-desc">Descripció</p>
 
-        <a href="#" id="ex-link" target="_blank" class="video-box">
-            ▶ VEURE VÍDEO EXERCICI
+        <a href="#" id="ex-link" target="_blank" class="video-btn">
+            🎬 OBRIR VÍDEO EXERCICI
         </a>
 
         <div class="stats">
             <div class="stat-item">
                 <span>Objectiu</span>
-                <b id="ex-dosi">15 Reps</b>
+                <b id="ex-dosi">15</b>
             </div>
             <div class="stat-item">
-                <span>Completat</span>
+                <span>Fetes</span>
                 <b id="ex-current">0</b>
             </div>
         </div>
 
-        <button class="btn-main" id="actionBtn" onclick="handleAction()">Comptar Repetició</button>
+        <button class="btn-main" id="actionBtn" onclick="handleAction()">Comptar</button>
         
         <div class="pain-warning">
-            ⚠ TOLERÀNCIA AL DOLOR: MÀXIM 3/10
+            [span_0](start_span)⚠ DOLOR MÀXIM: 3/10[span_0](end_span)
         </div>
     </div>
 </main>
 
 <script>
     const routine = [
-        [span_3](start_span)// MOBILITAT[span_3](end_span)
-        { title: "Cat/Camel", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/1Yy0PFXDm23_z1i3e12ouSq/view", desc: "Mobilitat controlada de tota la columna." },
-        { title: "Dorsal quadrupèdia", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/1Y4XAoUatDpi9iY-IB25P3MH1YGD1nqt-/view", desc: "Rotació de la part superior de l'esquena." },
-        { title: "Dorsal foam roller", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/16RmoJ5EYa1RERpbujP3E0rDDP6wEazl-/view", desc: "Extensió dorsal amb l'ajuda del rodet." },
-        { title: "Rotació decúbit lateral", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/1oW-xTXMxlky94Ehv7FBk7C7914Ev_wLm/view", desc: "Obertura de pit i rotació de tronc al terra." },
-        { title: "Rotació decúbit supí", dosi: 15, cat: "Mobilitat Matí", video: "https://drive.google.com/file/d/1LDfIA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", desc: "Deixant caure els genolls als costats." },
-        
-        [span_4](start_span)// FORÇA[span_4](end_span)
-        { title: "Hip thrust", dosi: 15, cat: "Força (3 dies/set)", video: "https://drive.google.com/file/d/1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7/view", desc: "Activació de gluti i control lumbar." },
-        { title: "Gluti mig planxa", dosi: 15, cat: "Força (3 dies/set)", video: "https://drive.google.com/file/d/1OilUaTYDzQGLhEtkAj5JLbPq6VSb2qU-/view", desc: "Estabilitat lateral de malucs." },
-        { title: "Squat a calaix", dosi: 15, cat: "Força (3 dies/set)", video: "https://drive.google.com/file/d/1kAyDJ6SFC_115916aaS6e3YcF8t7E8kT/view", desc: "Força de cames amb rang segur." },
-        
-        [span_5](start_span)// ESTIRAMENT[span_5](end_span)
-        [span_6](start_span){ title: "Estirament posterior", dosi: 1, cat: "Vespre", video: "https://drive.google.com/file/d/1LDfIA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", desc: "Cama a la paret. Gluti a terra i genolls estesos[span_6](end_span)." }
+        [span_1](start_span){ title: "Cat/Camel", dosi: 15, cat: "Mobilitat Matí[span_1](end_span)[span_2](start_span)", video: "https://drive.google.com/file/d/1Yy0PFXDm23_z1i3e12ouSq/view", desc: "10-15 repeticions cada matí[span_2](end_span)" },
+        [span_3](start_span){ title: "Dorsal quadrupèdia", dosi: 15, cat: "Mobilitat Matí[span_3](end_span)[span_4](start_span)", video: "https://drive.google.com/file/d/1Y4XAoUatDpi9iY-IB25P3MH1YGD1nqt-/view", desc: "10-15 repeticions cada matí[span_4](end_span)" },
+        [span_5](start_span){ title: "Dorsal foam roller", dosi: 15, cat: "Mobilitat Matí[span_5](end_span)[span_6](start_span)", video: "https://drive.google.com/file/d/16RmoJ5EYa1RERpbujP3E0rDDP6wEazl-/view", desc: "10-15 repeticions cada matí[span_6](end_span)" },
+        [span_7](start_span){ title: "Rotació decúbit lateral", dosi: 15, cat: "Mobilitat Matí[span_7](end_span)[span_8](start_span)", video: "https://drive.google.com/file/d/1oW-xTXMxlky94Ehv7FBk7C7914Ev_wLm/view", desc: "10-15 repeticions cada matí[span_8](end_span)" },
+        [span_9](start_span){ title: "Rotació decúbit supí", dosi: 15, cat: "Mobilitat Matí[span_9](end_span)[span_10](start_span)", video: "https://drive.google.com/file/d/1LDfIA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", desc: "10-15 repeticions cada matí[span_10](end_span)" },
+        [span_11](start_span){ title: "Rotació dorsal paret", dosi: 15, cat: "Mobilitat Matí[span_11](end_span)[span_12](start_span)", video: "https://drive.google.com/file/d/17Ch7Qr_GFa2-bScT48Sjy2sP2Dn5_bp_/view", desc: "10-15 repeticions cada matí[span_12](end_span)" },
+        [span_13](start_span){ title: "Hip thrust", dosi: 15, cat: "Força[span_13](end_span)[span_14](start_span)[span_15](start_span)", video: "https://drive.google.com/file/d/1sT3iBVxzDw9nWjuC4_CV43VjyPEkcBp7/view", desc: "3 dies/setmana, 10-15 repeticions[span_14](end_span)[span_15](end_span)" },
+        [span_16](start_span){ title: "Gluti mig planxa", dosi: 15, cat: "Força[span_16](end_span)[span_17](start_span)[span_18](start_span)", video: "https://drive.google.com/file/d/1OilUaTYDzQGLhEtkAj5JLbPq6VSb2qU-/view", desc: "3 dies/setmana, 10-15 repeticions[span_17](end_span)[span_18](end_span)" },
+        [span_19](start_span){ title: "Squat a calaix", dosi: 15, cat: "Força[span_19](end_span)[span_20](start_span)[span_21](start_span)", video: "https://drive.google.com/file/d/1kAyDJ6SFC_115916aaS6e3YcF8t7E8kT/view", desc: "3 dies/setmana, 10-15 repeticions[span_20](end_span)[span_21](end_span)" },
+        [span_22](start_span){ title: "Estirament posterior", dosi: 1, cat: "Estirament Vespre[span_22](end_span)[span_23](start_span)[span_24](start_span)", video: "https://drive.google.com/file/d/1LDfIA1NHhvWHk7mkSNcW4esEyj8cZgPj/view", desc: "5-10 minuts mantenint la posició[span_23](end_span)[span_24](end_span)" }
     ];
 
     let currentIdx = 0;
@@ -202,25 +184,22 @@
 
     function updateUI() {
         const ex = routine[currentIdx];
-        document.getElementById('ex-num').innerText = (currentIdx + 1).toString().padStart(2, '0');
         document.getElementById('ex-title').innerText = ex.title;
         document.getElementById('ex-desc').innerText = ex.desc;
         document.getElementById('cat-label').innerText = ex.cat;
         document.getElementById('ex-link').href = ex.video;
-        document.getElementById('ex-dosi').innerText = ex.dosi + (ex.dosi > 1 ? " Reps" : " Minut");
+        document.getElementById('ex-dosi').innerText = ex.dosi;
         document.getElementById('ex-current').innerText = count;
         
-        // Progress bar
         const progress = (currentIdx / routine.length) * 100;
         document.getElementById('progressBar').style.width = progress + "%";
 
-        // Botó
         const btn = document.getElementById('actionBtn');
         if (count >= ex.dosi) {
-            btn.innerText = "Següent Exercici →";
+            btn.innerText = "SEGÜENT EXERCICI";
             btn.style.background = "#ffffff";
         } else {
-            btn.innerText = ex.dosi > 1 ? "Comptar Repetició" : "Marcar com Fet";
+            btn.innerText = "COMPTAR REPETICIÓ";
             btn.style.background = "var(--accent)";
         }
     }
@@ -229,20 +208,19 @@
         const ex = routine[currentIdx];
         if (count < ex.dosi) {
             count++;
-            if (window.navigator.vibrate) window.navigator.vibrate(50); // Vibració suau
-            updateUI();
         } else {
             if (currentIdx < routine.length - 1) {
                 currentIdx++;
                 count = 0;
-                updateUI();
             } else {
-                alert("🎉 Sessió completada! Cuida aquesta esquena.");
+                alert("Rutina finalitzada!");
+                currentIdx = 0;
+                count = 0;
             }
         }
+        updateUI();
     }
 
-    // Inicialitzar
     updateUI();
 </script>
 
